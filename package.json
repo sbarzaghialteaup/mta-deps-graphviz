@@ -1,0 +1,36 @@
+{
+  "name": "mta-deps-graphviz",
+  "version": "0.0.1",
+  "description": "Renders the graph with MTA modules, resources and dependencies between them using GraphViz",
+  "main": "src/mta-deps-graphviz",
+  "scripts": {
+    "lint": "eslint ./src",
+    "postlint": "echo ✅ lint valid",
+    "test": "npm run lint && npm run build && jest",
+    "prepare": "husky install",
+    "build": "rollup -c config/rollup.node-config.js"
+  },
+  "keywords": [
+    "SAP",
+    "MTA",
+    "dependency",
+    "graphviz"
+  ],
+  "author": "Samuele Barzaghi <sambarza@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-prettier": "3.4.0",
+    "husky": "^7.0.0",
+    "jest": "^27.0.6",
+    "prettier": "2.3.2",
+    "rollup": "^2.56.0"
+  },
+  "dependencies": {
+    "graphviz": "^0.0.9",
+    "mta-deps-parser": "^0.0.2"
+  }
+}
