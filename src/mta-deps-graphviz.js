@@ -109,7 +109,7 @@ function renderDestination(node) {
 
 function renderProperty(node) {
     const nodeAttributes = {
-        label: `\\n${node.name}\n\n${node.value}`,
+        label: `\\nName: ${node.name.split(':')[1]}\n\nValue: ${node.value}`,
         shape: `note`,
         color: `grey`,
     };
