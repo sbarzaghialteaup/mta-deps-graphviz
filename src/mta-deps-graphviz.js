@@ -89,6 +89,15 @@ function renderServiceWorkflow(node) {
     return nodeAttributes;
 }
 
+function renderServiceApplicationLog(node) {
+    const nodeAttributes = {
+        label: `{${node.type}|${node.name}}`,
+        shape: `record`,
+        color: `brown`,
+    };
+    return nodeAttributes;
+}
+
 function renderDestination(node) {
     const nodeAttributes = {
         label: `\\n\\n${node.name}`,
@@ -136,6 +145,7 @@ const nodeRenderers = {
     [MtaGraph.nodeType.serviceXsuaa]: renderServiceXsuaa,
     [MtaGraph.nodeType.servicePortal]: renderServicePortal,
     [MtaGraph.nodeType.serviceWorkflow]: renderServiceWorkflow,
+    [MtaGraph.nodeType.serviceApplicationLog]: renderServiceApplicationLog,
     [MtaGraph.nodeType.destination]: renderDestination,
     [MtaGraph.nodeType.property]: renderProperty,
     [MtaGraph.nodeType.portalDeployer]: renderPortalDeployer,
@@ -185,6 +195,7 @@ function getEdgeColor(link) {
     colorMap[MtaGraph.linkType.deployApp] = 'green';
     colorMap[MtaGraph.linkType.defineMtaProperty] = 'grey';
     colorMap[MtaGraph.linkType.useMtaProperty] = 'grey';
+    colorMap[MtaGraph.linkType.logTo] = 'brown';
 
     return colorMap[link.type] ? colorMap[link.type] : 'black';
 }
