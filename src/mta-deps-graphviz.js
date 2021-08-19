@@ -142,13 +142,39 @@ const nodeRenderers = {
     [MtaGraph.nodeType.approuter]: renderApprouter,
 };
 
+function renderGenericModule(node) {
+    const nodeAttributes = {
+        label: `\\n${node.type}\\n\\n${node.name}`,
+        shape: `box3d`,
+        color: `blue`,
+    };
+    return nodeAttributes;
+}
+
+function renderGenericResource(node) {
+    const nodeAttributes = {
+        label: `{${node.type}|${node.name}}`,
+        shape: `record`,
+        color: `orange`,
+    };
+    return nodeAttributes;
+}
+
 function getNodeAttributes(node) {
     const renderer = nodeRenderers[node.type];
-    if (!renderer) {
-        return {};
+    if (renderer) {
+        return renderer(node);
     }
+    switch (node.additionalInfo.category) {
+        case MtaGraph.nodeCategory.module:
+            return renderGenericModule(node);
 
-    return renderer(node);
+        case MtaGraph.nodeCategory.resource:
+            return renderGenericResource(node);
+
+        default:
+            return {};
+    }
 }
 
 function getEdgeColor(link) {
