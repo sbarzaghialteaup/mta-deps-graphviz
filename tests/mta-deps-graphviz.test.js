@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const MtaDeps = require('mta-deps-parser');
-const GraphVizRenderer = require('../dist/index');
+const GraphVizRenderer = require('../src/mta-deps-graphviz');
 
 let dot;
 

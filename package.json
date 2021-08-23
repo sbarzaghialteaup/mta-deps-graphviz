@@ -6,9 +6,8 @@
     "scripts": {
         "lint": "eslint ./src",
         "postlint": "echo ✅ lint valid",
-        "test": "npm run lint && npm run build && jest",
-        "prepare": "husky install",
-        "build": "rollup -c config/rollup.node-config.js"
+        "test": "npm run lint && jest",
+        "prepare": "husky install"
     },
     "keywords": [
         "SAP",
@@ -27,8 +26,7 @@
         "eslint-plugin-prettier": "3.4.0",
         "husky": "^7.0.0",
         "jest": "^27.0.6",
-        "prettier": "2.3.2",
-        "rollup": "^2.56.0"
+        "prettier": "2.3.2"
     },
     "dependencies": {
         "graphviz": "^0.0.9",
