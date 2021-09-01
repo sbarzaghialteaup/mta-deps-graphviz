@@ -31,5 +31,8 @@
     "dependencies": {
         "graphviz": "^0.0.9",
         "mta-deps-parser": "^0.1.0"
-    }
+    },
+    "files": [
+        "src/"
+    ]
 }
