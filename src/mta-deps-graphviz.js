@@ -107,6 +107,15 @@ function renderDestination(node) {
     return nodeAttributes;
 }
 
+function renderPropertiesSet(node) {
+    const nodeAttributes = {
+        label: `${node.name}`,
+        shape: `note`,
+        color: `black`,
+    };
+    return nodeAttributes;
+}
+
 function renderProperty(node) {
     const nodeAttributes = {
         label: `\\nName: ${node.name.split(':')[1]}\n\nValue: ${node.value}`,
@@ -147,6 +156,7 @@ const nodeRenderers = {
     [MtaGraph.nodeType.serviceWorkflow]: renderServiceWorkflow,
     [MtaGraph.nodeType.serviceApplicationLog]: renderServiceApplicationLog,
     [MtaGraph.nodeType.destination]: renderDestination,
+    [MtaGraph.nodeType.propertiesSet]: renderPropertiesSet,
     [MtaGraph.nodeType.property]: renderProperty,
     [MtaGraph.nodeType.portalDeployer]: renderPortalDeployer,
     [MtaGraph.nodeType.approuter]: renderApprouter,
@@ -230,7 +240,7 @@ async function render(mtaGraph, customRenderers) {
             }
 
             const e = cluster.addEdge(node.name, link.name, {
-                label: link.type,
+                label: link.label ? link.label : link.type,
             });
 
             const color = getEdgeColor(link);
