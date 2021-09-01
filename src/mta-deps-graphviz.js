@@ -240,7 +240,7 @@ async function render(mtaGraph, customRenderers) {
             }
 
             const e = cluster.addEdge(node.name, link.name, {
-                label: link.type,
+                label: link.label ? link.label : link.type,
             });
 
             const color = getEdgeColor(link);
