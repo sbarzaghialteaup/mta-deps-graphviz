@@ -1,0 +1,113 @@
+{
+    "digraph": {
+        "colorscheme": "greys9",
+        "fontname": "helvetica",
+        "bgcolor": "#e6cfd4"
+    },
+    "mtaCluster": {
+        "fontname": "helvetica",
+        "fontsize": "14",
+        "bgcolor": "white",
+        "labeljust": "l"
+    },
+    "cluster": {
+        "fontsize": "12",
+        "bgcolor": "#e6dbcf",
+        "style": "filled, dotted",
+        "labeljust": "l"
+    },
+    "default-nodes": {
+        "fontname": "helvetica",
+        "fontsize": "10",
+        "margin": "0.05",
+        "height": "1.0",
+        "width": "1.0",
+        "style": "filled, rounded",
+        "color": "#737c80",
+        "fillcolor": "#bfb9ac"
+    },
+    "default-links": {
+        "fontsize": "10",
+        "fontname": "helvetica",
+        "penwidth": "0.7",
+        "color": "black",
+        "fontcolor": "black"
+    },
+    "nodes": {
+        "nodejs": {
+            "shape": "house"
+        },
+        "html5": {
+            "shape": "react",
+            "color": "#8b875d",
+            "fillcolor": "#b0ac89"
+        },
+        "serviceHanaInstance": {
+            "shape": "cylinder",
+            "fillcolor": "#e6bb73",
+            "color": "#bf8a30"
+        },
+        "serviceHtml5Repo": {
+            "shape": "folder"
+        },
+        "serviceXsuaa": {
+            "shape": "record",
+            "color": "#40806e"
+        },
+        "serviceApplicationLog": {
+            "color": "#815d72"
+        },
+        "serviceDestination": {
+            "shape": "underline"
+        },
+        "propertiesSet": {
+            "shape": "note",
+            "fillcolor": "#ffffcc"
+        },
+        "property": {
+            "shape": "note",
+            "fillcolor": "#ffffe6"
+        },
+        "destination": {
+            "shape": "underline"
+        }
+    },
+    "links": {
+        "default": {
+            "color": "black",
+            "fontcolor": "black"
+        },
+        "use": {
+            "style": "dashed"
+        },
+        "deployApp": {
+            "color": "#8b875d",
+            "fontcolor": "#8b875d",
+            "style": "solid"
+        },
+        "deployTablesTo": {
+            "color": "#bf8a30",
+            "fontcolor": "#bf8a30"
+        },
+        "readWrite": {
+            "color": "#bf8a30",
+            "fontcolor": "#bf8a30"
+        },
+        "defineMtaProperty": {
+            "color": "grey",
+            "fontcolor": "grey"
+        },
+        "useMtaProperty": {
+            "color": "grey",
+            "fontcolor": "grey"
+        },
+        "logTo": {
+            "color": "#815d72",
+            "fontcolor": "#815d72"
+        },
+        "useXsuaaService": {
+            "color": "#40806e",
+            "fontcolor": "#40806e"
+        }
+    }
+}

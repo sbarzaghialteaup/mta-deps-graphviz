@@ -1,213 +1,183 @@
+/* eslint no-unused-vars: ["error", { "argsIgnorePattern": "^_" }] */
+
 const graphviz = require('graphviz');
 const MtaGraph = require('mta-deps-parser');
+const theme = require('./theme-default.json');
 
-function renderNodeJS(node) {
-    const nodeAttributes = {
-        label: `\\n${node.type}\\n\\n${node.name}`,
-        shape: `house`,
-        color: `blue`,
-    };
-    return nodeAttributes;
-}
+function renderHtml5Repo(node, nodeAttributes) {
+    const newAttributes = {};
 
-function renderDbDeployer(node) {
-    const nodeAttributes = {
-        label: `\\n${node.type}\\n\\n${node.name}`,
-        shape: `box3d`,
-        color: `blue`,
-    };
-    return nodeAttributes;
+    if (node.additionalInfo.resource?.parameters?.config?.sizeLimit) {
+        newAttributes.label = `${nodeAttributes.label}\n\nSize: ${node.additionalInfo.resource?.parameters?.config?.sizeLimit} MB`;
+    }
+    return newAttributes;
 }
 
-function renderDeployer(node) {
-    const nodeAttributes = {
-        label: `\\n${node.type}\\n\\n${node.name}`,
-        shape: `box3d`,
-        color: `blue`,
-    };
-    return nodeAttributes;
+function renderNodeJS(node, nodeAttributes) {
+    const newAttributes = {};
+
+    if (node.additionalInfo.module?.parameters?.memory) {
+        newAttributes.label = `${nodeAttributes.label}\n\nMemory: ${node.additionalInfo.module.parameters.memory}`;
+    }
+    return newAttributes;
 }
 
-function renderHtml5(node) {
-    const nodeAttributes = {
-        label: `\\n${node.type}\\n\\n${node.name}`,
-        shape: `rect`,
-        color: `green`,
+function renderDestination(node, _nodeAttributes) {
+    return {
+        label: `\\n${node.label}\\n\\n${node.name}`,
     };
-    return nodeAttributes;
-}
-function renderServiceHanaInstance(node) {
-    const nodeAttributes = {
-        label: `\\n${node.type}\\n\\n${node.name}`,
-        shape: `cylinder`,
-        color: `orange`,
-    };
-    return nodeAttributes;
-}
-function renderServiceHtml5(node) {
-    const nodeAttributes = {
-        label: `\\n${node.type}\\n\\n${node.name}`,
-        shape: `folder`,
-        color: `orange`,
-    };
-    return nodeAttributes;
 }
 
-function renderServiceDestination(node) {
-    const nodeAttributes = {
-        label: `\\n${node.type}\\n\\n${node.name}`,
-        shape: `cds`,
-        color: `orange`,
+function renderPropertiesSet(node, _nodeAttributes) {
+    return {
+        label: `${node.name}\\n`,
     };
-    return nodeAttributes;
 }
 
-function renderServiceXsuaa(node) {
-    const nodeAttributes = {
-        label: `{${node.type}|${node.name}}`,
-        shape: `record`,
-        color: `orange`,
-    };
-    return nodeAttributes;
-}
-
-function renderServicePortal(node) {
-    const nodeAttributes = {
-        label: `{${node.type}|${node.name}}`,
-        shape: `record`,
-        color: `orange`,
-    };
-    return nodeAttributes;
-}
-
-function renderServiceWorkflow(node) {
-    const nodeAttributes = {
-        label: `{${node.type}|${node.name}}`,
-        shape: `record`,
-        color: `orange`,
-    };
-    return nodeAttributes;
-}
-
-function renderServiceApplicationLog(node) {
-    const nodeAttributes = {
-        label: `{${node.type}|${node.name}}`,
-        shape: `record`,
-        color: `brown`,
-    };
-    return nodeAttributes;
-}
-
-function renderDestination(node) {
-    const nodeAttributes = {
-        label: `\\n\\n${node.name}`,
-        shape: `underline`,
-        color: `blue`,
-    };
-    return nodeAttributes;
-}
-
-function renderPropertiesSet(node) {
-    const nodeAttributes = {
-        label: `${node.name}`,
-        shape: `note`,
-        color: `black`,
-    };
-    return nodeAttributes;
-}
-
-function renderProperty(node) {
-    const nodeAttributes = {
+function renderProperty(node, _nodeAttributes) {
+    return {
         label: `\\nName: ${node.name.split(':')[1]}\n\nValue: ${node.value}`,
-        shape: `note`,
-        color: `grey`,
     };
-    return nodeAttributes;
-}
-
-function renderPortalDeployer(node) {
-    const nodeAttributes = {
-        label: `\\n${node.type}\\n\\n${node.name}`,
-        shape: `box3d`,
-        color: `blue`,
-    };
-    return nodeAttributes;
-}
-
-function renderApprouter(node) {
-    const nodeAttributes = {
-        label: `\\n${node.type}\\n\\n${node.name}`,
-        shape: `box3d`,
-        color: `blue`,
-    };
-    return nodeAttributes;
 }
 
 const nodeRenderers = {
+    [MtaGraph.nodeType.serviceHtml5Repo]: renderHtml5Repo,
     [MtaGraph.nodeType.nodejs]: renderNodeJS,
-    [MtaGraph.nodeType.dbDeployer]: renderDbDeployer,
-    [MtaGraph.nodeType.deployer]: renderDeployer,
-    [MtaGraph.nodeType.html5]: renderHtml5,
-    [MtaGraph.nodeType.serviceHanaInstance]: renderServiceHanaInstance,
-    [MtaGraph.nodeType.serviceHtml5Repo]: renderServiceHtml5,
-    [MtaGraph.nodeType.serviceDestination]: renderServiceDestination,
-    [MtaGraph.nodeType.serviceXsuaa]: renderServiceXsuaa,
-    [MtaGraph.nodeType.servicePortal]: renderServicePortal,
-    [MtaGraph.nodeType.serviceWorkflow]: renderServiceWorkflow,
-    [MtaGraph.nodeType.serviceApplicationLog]: renderServiceApplicationLog,
     [MtaGraph.nodeType.destination]: renderDestination,
     [MtaGraph.nodeType.propertiesSet]: renderPropertiesSet,
     [MtaGraph.nodeType.property]: renderProperty,
-    [MtaGraph.nodeType.portalDeployer]: renderPortalDeployer,
-    [MtaGraph.nodeType.approuter]: renderApprouter,
 };
 
-function renderGenericModule(node) {
-    const nodeAttributes = {
-        label: `\\n${node.type}\\n\\n${node.name}`,
-        shape: `box3d`,
-        color: `blue`,
-    };
-    return nodeAttributes;
-}
-
-function renderGenericResource(node) {
-    const nodeAttributes = {
-        label: `{${node.type}|${node.name}}`,
-        shape: `record`,
-        color: `orange`,
-    };
-    return nodeAttributes;
-}
-
-function getNodeAttributes(node) {
-    const renderer = nodeRenderers[node.type];
-    if (renderer) {
-        return renderer(node);
-    }
+function renderDefaultAttributes(node) {
     switch (node.additionalInfo.category) {
         case MtaGraph.nodeCategory.module:
-            return renderGenericModule(node);
+            return {
+                label: `\\n${node.label}\\n\\n${node.name}`,
+                color: '#737c80',
+                fillcolor: '#bfb9ac',
+                shape: 'box3d',
+            };
 
         case MtaGraph.nodeCategory.resource:
-            return renderGenericResource(node);
+            return {
+                label: `\\n${node.label}\\n\\n${node.name}`,
+                color: '#407780',
+                fillcolor: '#488791',
+                shape: 'record',
+            };
 
         default:
             return {};
     }
 }
 
-function getEdgeColor(link) {
-    const colorMap = [];
+function setNodeDynamicLabel(nodeAttributes, node, setLabel) {
+    // Example to use in theme:
+    // "setLabel": "nodeAttributes.label + '\\n\\nMemory: ' + node.additionalInfo.module.parameters.memory"
 
-    colorMap[MtaGraph.linkType.deployTablesTo] = 'orange';
-    colorMap[MtaGraph.linkType.readWrite] = 'orange';
-    colorMap[MtaGraph.linkType.deployApp] = 'green';
-    colorMap[MtaGraph.linkType.defineMtaProperty] = 'grey';
-    colorMap[MtaGraph.linkType.useMtaProperty] = 'grey';
-    colorMap[MtaGraph.linkType.logTo] = 'brown';
+    // eslint-disable-next-line no-param-reassign
+    nodeAttributes.setLabel = undefined;
 
-    return colorMap[link.type] ? colorMap[link.type] : 'black';
+    // eslint-disable-next-line no-param-reassign, no-eval
+    nodeAttributes.label = eval(setLabel);
+}
+
+function getNodeAttributes(node) {
+    let nodeAttributes = renderDefaultAttributes(node);
+
+    const renderer = nodeRenderers[node.type];
+    if (renderer) {
+        nodeAttributes = {
+            ...nodeAttributes,
+            ...renderer(node, nodeAttributes),
+        };
+    }
+
+    nodeAttributes = { ...nodeAttributes, ...theme.nodes[node.type] };
+
+    if (theme.nodes[node.type]?.setLabel) {
+        setNodeDynamicLabel(
+            nodeAttributes,
+            node,
+            theme.nodes[node.type].setLabel
+        );
+    }
+
+    return nodeAttributes;
+}
+
+function copyAttributesFromTheme(
+    themeAttributes,
+    themeAttributesDefault,
+    graphObjectSetMethod
+) {
+    if (themeAttributesDefault) {
+        Object.entries(themeAttributesDefault).forEach(
+            ([attributeName, attributeValue]) => {
+                graphObjectSetMethod(attributeName, attributeValue);
+            }
+        );
+    }
+    if (themeAttributes) {
+        Object.entries(themeAttributes).forEach(
+            ([attributeName, attributeValue]) => {
+                graphObjectSetMethod(attributeName, attributeValue);
+            }
+        );
+    }
+}
+
+function setEdgeAttributes(link, edge) {
+    copyAttributesFromTheme(
+        theme.links[link.type],
+        theme.links.default,
+        edge.set.bind(edge)
+    );
+}
+/**
+ *
+ * @param {graphviz.Graph} digraph
+ */
+function renderDigraph(digraph) {
+    copyAttributesFromTheme(
+        theme.digraph,
+        undefined,
+        digraph.set.bind(digraph)
+    );
+
+    copyAttributesFromTheme(
+        theme['default-nodes'],
+        undefined,
+        digraph.setNodeAttribut.bind(digraph)
+    );
+
+    copyAttributesFromTheme(
+        theme['default-links'],
+        undefined,
+        digraph.setEdgeAttribut.bind(digraph)
+    );
+}
+
+function renderMtaCluster(mtaCluster, mtaGraph) {
+    mtaCluster.set(
+        'label',
+        `MTA ID: ${mtaGraph.ID.toUpperCase()} [${mtaGraph.version}]`
+    );
+    copyAttributesFromTheme(
+        theme.mtaCluster,
+        undefined,
+        mtaCluster.set.bind(mtaCluster)
+    );
+}
+
+function renderCluster(cluster, link) {
+    cluster.set('label', link.cluster);
+
+    copyAttributesFromTheme(
+        theme.cluster,
+        undefined,
+        cluster.set.bind(cluster)
+    );
 }
 
 async function render(mtaGraph, customRenderers) {
@@ -218,13 +188,17 @@ async function render(mtaGraph, customRenderers) {
     }
 
     const mtaGraphViz = graphviz.digraph('MTA');
+    const mainCluster = mtaGraphViz.addCluster('cluster_MTA_MAIN');
     const clusters = [];
+
+    renderDigraph(mtaGraphViz);
+    renderMtaCluster(mainCluster, mtaGraph);
 
     mtaGraph.nodes.forEach((node) => {
         mtaGraphViz.addNode(node.name, getNodeAttributes(node));
 
         node.links?.forEach((link) => {
-            let cluster = mtaGraphViz;
+            let cluster = mainCluster;
 
             if (link.cluster) {
                 const clusterId = `cluster_${link.cluster.replace(/ /g, '_')}`;
@@ -232,21 +206,18 @@ async function render(mtaGraph, customRenderers) {
                 cluster = clusters[clusterId];
 
                 if (!cluster) {
-                    cluster = mtaGraphViz.addCluster(clusterId);
-                    cluster.set('label', link.cluster);
+                    cluster = mainCluster.addCluster(clusterId);
+                    renderCluster(cluster, link);
 
                     clusters[clusterId] = cluster;
                 }
             }
 
-            const e = cluster.addEdge(node.name, link.name, {
+            const edge = cluster.addEdge(node.name, link.name, {
                 label: link.label ? link.label : link.type,
             });
 
-            const color = getEdgeColor(link);
-
-            e.set('color', color);
-            e.set('fontcolor', color);
+            setEdgeAttributes(link, edge);
         });
     });
 
