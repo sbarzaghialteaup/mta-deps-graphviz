@@ -5,7 +5,6 @@ const MtaGraph = require('mta-deps-parser');
 const theme = require('./theme-default.json');
 
 function renderDestination(node, _nodeAttributes) {
-    console.log(node);
     return {
         label: `\\n${node.label}\\n\\n${node.name}`,
     };
@@ -71,50 +70,53 @@ function getNodeAttributes(node) {
 function copyAttributesFromTheme(
     themeAttributes,
     themeAttributesDefault,
-    graphObject
+    graphObjectSetMethod
 ) {
     if (themeAttributesDefault) {
         Object.entries(themeAttributesDefault).forEach(
             ([attributeName, attributeValue]) => {
-                graphObject.set(attributeName, attributeValue);
+                graphObjectSetMethod(attributeName, attributeValue);
             }
         );
     }
     if (themeAttributes) {
         Object.entries(themeAttributes).forEach(
             ([attributeName, attributeValue]) => {
-                graphObject.set(attributeName, attributeValue);
+                graphObjectSetMethod(attributeName, attributeValue);
             }
         );
     }
 }
 
 function setEdgeAttributes(link, edge) {
-    console.log(link.type);
-    copyAttributesFromTheme(theme.links[link.type], theme.links.default, edge);
+    copyAttributesFromTheme(
+        theme.links[link.type],
+        theme.links.default,
+        edge.set.bind(edge)
+    );
 }
 /**
  *
  * @param {graphviz.Graph} digraph
  */
 function renderDigraph(digraph) {
-    digraph.set('colorscheme', 'greys9');
+    copyAttributesFromTheme(
+        theme.digraph,
+        undefined,
+        digraph.set.bind(digraph)
+    );
 
-    digraph.set('fontname', 'helvetica');
-    digraph.set('bgcolor', '#e6cfd4');
+    copyAttributesFromTheme(
+        theme['default-nodes'],
+        undefined,
+        digraph.setNodeAttribut.bind(digraph)
+    );
 
-    digraph.setNodeAttribut('fontname', 'helvetica');
-    digraph.setNodeAttribut('fontsize', '10');
-    digraph.setNodeAttribut('margin', '0.05');
-    digraph.setNodeAttribut('height', '1.0');
-    digraph.setNodeAttribut('width', '1.0');
-    digraph.setNodeAttribut('style', 'filled, rounded');
-    digraph.setNodeAttribut('color', '#737c80');
-    digraph.setNodeAttribut('fillcolor', '#bfb9ac');
-
-    digraph.setEdgeAttribut('fontsize', '10');
-    digraph.setEdgeAttribut('fontname', 'helvetica');
-    digraph.setEdgeAttribut('penwidth', '0.7');
+    copyAttributesFromTheme(
+        theme['default-links'],
+        undefined,
+        digraph.setEdgeAttribut.bind(digraph)
+    );
 }
 
 function renderMtaCluster(mtaCluster, mtaGraph) {
@@ -122,19 +124,21 @@ function renderMtaCluster(mtaCluster, mtaGraph) {
         'label',
         `MTA ID: ${mtaGraph.ID.toUpperCase()} [${mtaGraph.version}]`
     );
-    mtaCluster.set('fontname', 'helvetica');
-    mtaCluster.set('fontsize', '14');
-    mtaCluster.set('bgcolor', 'white');
-    mtaCluster.set('labeljust', 'l');
+    copyAttributesFromTheme(
+        theme.mtaCluster,
+        undefined,
+        mtaCluster.set.bind(mtaCluster)
+    );
 }
 
 function renderCluster(cluster, link) {
-    cluster.set('fontsize', '12');
     cluster.set('label', link.cluster);
-    cluster.set('bgcolor', '#e6dbcf');
-    cluster.set('style', 'filled, dotted');
-    cluster.set('labeljust', 'l');
-    cluster.setNodeAttribut('style', 'filled, rounded');
+
+    copyAttributesFromTheme(
+        theme.cluster,
+        undefined,
+        cluster.set.bind(cluster)
+    );
 }
 
 async function render(mtaGraph, customRenderers) {
