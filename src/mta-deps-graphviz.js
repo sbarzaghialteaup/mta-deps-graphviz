@@ -71,6 +71,17 @@ function renderDefaultAttributes(node) {
     }
 }
 
+function setNodeDynamicLabel(nodeAttributes, node, setLabel) {
+    // Example to use in theme:
+    // "setLabel": "nodeAttributes.label + '\\n\\nMemory: ' + node.additionalInfo.module.parameters.memory"
+
+    // eslint-disable-next-line no-param-reassign
+    nodeAttributes.setLabel = undefined;
+
+    // eslint-disable-next-line no-param-reassign, no-eval
+    nodeAttributes.label = eval(setLabel);
+}
+
 function getNodeAttributes(node) {
     let nodeAttributes = renderDefaultAttributes(node);
 
@@ -83,6 +94,14 @@ function getNodeAttributes(node) {
     }
 
     nodeAttributes = { ...nodeAttributes, ...theme.nodes[node.type] };
+
+    if (theme.nodes[node.type]?.setLabel) {
+        setNodeDynamicLabel(
+            nodeAttributes,
+            node,
+            theme.nodes[node.type].setLabel
+        );
+    }
 
     return nodeAttributes;
 }
