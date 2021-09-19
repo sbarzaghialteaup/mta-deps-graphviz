@@ -4,6 +4,24 @@ const graphviz = require('graphviz');
 const MtaGraph = require('mta-deps-parser');
 const theme = require('./theme-default.json');
 
+function renderHtml5Repo(node, nodeAttributes) {
+    const newAttributes = {};
+
+    if (node.additionalInfo.resource?.parameters?.config?.sizeLimit) {
+        newAttributes.label = `${nodeAttributes.label}\n\nSize: ${node.additionalInfo.resource?.parameters?.config?.sizeLimit} MB`;
+    }
+    return newAttributes;
+}
+
+function renderNodeJS(node, nodeAttributes) {
+    const newAttributes = {};
+
+    if (node.additionalInfo.module?.parameters?.memory) {
+        newAttributes.label = `${nodeAttributes.label}\n\nMemory: ${node.additionalInfo.module.parameters.memory}`;
+    }
+    return newAttributes;
+}
+
 function renderDestination(node, _nodeAttributes) {
     return {
         label: `\\n${node.label}\\n\\n${node.name}`,
@@ -23,6 +41,8 @@ function renderProperty(node, _nodeAttributes) {
 }
 
 const nodeRenderers = {
+    [MtaGraph.nodeType.serviceHtml5Repo]: renderHtml5Repo,
+    [MtaGraph.nodeType.nodejs]: renderNodeJS,
     [MtaGraph.nodeType.destination]: renderDestination,
     [MtaGraph.nodeType.propertiesSet]: renderPropertiesSet,
     [MtaGraph.nodeType.property]: renderProperty,
