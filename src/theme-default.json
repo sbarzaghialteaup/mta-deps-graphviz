@@ -1,0 +1,78 @@
+{
+    "nodes": {
+        "nodejs": {
+            "shape": "house"
+        },
+        "html5": {
+            "shape": "react",
+            "color": "#90BE6D"
+        },
+        "serviceHanaInstance": {
+            "shape": "cylinder",
+            "fillcolor": "#e6bb73",
+            "color": "#bf8a30"
+        },
+        "serviceHtml5Repo": {
+            "shape": "folder"
+        },
+        "serviceXsuaa": {
+            "shape": "record",
+            "color": "#40806e"
+        },
+        "serviceApplicationLog": {
+            "color": "brown"
+        },
+        "serviceDestination": {
+            "shape": "underline"
+        },
+        "propertiesSet": {
+            "shape": "note",
+            "fillcolor": "#ffffcc"
+        },
+        "property": {
+            "shape": "note",
+            "fillcolor": "#ffffe6"
+        },
+        "destination": {
+            "shape": "underline"
+        }
+    },
+    "links": {
+        "default": {
+            "color": "black",
+            "fontcolor": "black"
+        },
+        "use": {
+            "style": "dashed"
+        },
+        "deployApp": {
+            "color": "#90BE6D",
+            "fontcolor": "#90BE6D",
+            "style": "solid"
+        },
+        "deployTablesTo": {
+            "color": "#bf8a30",
+            "fontcolor": "#bf8a30"
+        },
+        "readWrite": {
+            "color": "#bf8a30",
+            "fontcolor": "#bf8a30"
+        },
+        "defineMtaProperty": {
+            "color": "grey",
+            "fontcolor": "grey"
+        },
+        "useMtaProperty": {
+            "color": "grey",
+            "fontcolor": "grey"
+        },
+        "logTo": {
+            "color": "brown",
+            "fontcolor": "brown"
+        },
+        "useXsuaaService": {
+            "color": "#40806e",
+            "fontcolor": "#40806e"
+        }
+    }
+}
