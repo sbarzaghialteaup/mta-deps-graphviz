@@ -55,7 +55,7 @@
             "color": "#40806e"
         },
         "serviceApplicationLog": {
-            "color": "brown"
+            "color": "#815d72"
         },
         "serviceDestination": {
             "shape": "underline"
@@ -102,8 +102,8 @@
             "fontcolor": "grey"
         },
         "logTo": {
-            "color": "brown",
-            "fontcolor": "brown"
+            "color": "#815d72",
+            "fontcolor": "#815d72"
         },
         "useXsuaaService": {
             "color": "#40806e",
